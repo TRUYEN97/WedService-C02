@@ -2,13 +2,15 @@ package com.tec02.mapper.impl;
 
 import java.sql.ResultSet;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 
 import com.tec02.mapper.AbstactUserOwnerMapper;
-import com.tec02.mapper.IRowMapper;
+import com.tec02.mapper.IRoleMapper;
 import com.tec02.model.IRoleModel;
 
-public class RoleMapper extends AbstactUserOwnerMapper<IRoleModel> implements IRowMapper<IRoleModel> {
+@Default
+public class RoleMapper extends AbstactUserOwnerMapper<IRoleModel> implements IRoleMapper{
 
 	@Inject
 	private IRoleModel roleModel;
