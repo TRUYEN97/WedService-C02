@@ -1,12 +1,15 @@
 package com.tec02.model.impl;
 
+import javax.enterprise.inject.Default;
+
 import com.tec02.model.AbstactMoldel;
 import com.tec02.model.IRoleModel;
 import com.tec02.model.IUserModel;
 
+@Default
 public class UserModel extends AbstactMoldel<IUserModel> implements IUserModel{
-	private String userName;
-	private String userPass;
+	private String username;
+	private String userpass;
 	private boolean user_status;
 	private IRoleModel roleModel;
 	
@@ -17,7 +20,6 @@ public class UserModel extends AbstactMoldel<IUserModel> implements IUserModel{
 	public void setRoleModel(IRoleModel roleModel) {
 		this.roleModel = roleModel;
 	}
-
 	
 	public boolean isUser_status() {
 		return user_status;
@@ -27,21 +29,22 @@ public class UserModel extends AbstactMoldel<IUserModel> implements IUserModel{
 		this.user_status = user_status;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUserpass() {
+		return userpass;
+	}
+
+	public void setUserpass(String userpass) {
+		this.userpass = userpass;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserPass() {
-		return userPass;
-	}
-
-	public void setUserPass(String userPass) {
-		this.userPass = userPass;
-	}
 	
 
 }

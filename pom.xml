@@ -1,11 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.tec02</groupId>
-  <artifactId>WebService-C02</artifactId>
-  <version>1.0.0</version>
-  <packaging>war</packaging>
-  <properties>
-		<weld.servlet.version>1.1.0.Final</weld.servlet.version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tec02</groupId>
+	<artifactId>WebService-C02</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<properties>
+		<cdi-api.sersion>2.0-PFD2</cdi-api.sersion>
+		<mysql-connector.sersion>8.0.30</mysql-connector.sersion>
+		<weld.servlet.version>2.4.8.Final</weld.servlet.version>
 		<jsp.api.version>2.5</jsp.api.version>
 		<jstl.version>1.2</jstl.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
@@ -18,7 +20,18 @@
 		<commons.lang.version>2.6</commons.lang.version>
 	</properties>
 
+
 	<dependencies>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>${cdi-api.sersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.sersion}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
 			<artifactId>weld-servlet</artifactId>
@@ -29,6 +42,7 @@
 			<artifactId>sitemesh</artifactId>
 			<version>${sitemesh.version}</version>
 		</dependency>
+
 		<!-- Json-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -45,7 +59,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${fasterxml.jackson.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -56,7 +69,14 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>${codehaus.jackson.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>2.0.20</version>
+		</dependency>
+
 		<!-- end json-->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>

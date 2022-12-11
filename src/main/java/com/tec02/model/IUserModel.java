@@ -10,11 +10,11 @@ public interface IUserModel extends IModel<IUserModel>, Cloneable{
 
 	void setUser_status(boolean user_status);
 
-	String getUserName();
+	String getUsername();
 
-	void setUserName(String userName);
+	void setUsername(String username);
 
-	String getUserPass();
+	String getUserpass();
 
-	void setUserPass(String userPass);
+	void setUserpass(String userpass);
 }

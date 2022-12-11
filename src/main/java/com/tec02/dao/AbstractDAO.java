@@ -1,17 +1,17 @@
 package com.tec02.dao;
 
-import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.tec02.mapper.IRowMapper;
 
-public abstract class AbstractDAO<T> implements IUserDAO{
+public abstract class AbstractDAO<T> implements IUserDAO {
 	private final ResourceBundle resourceBundle;
 	public static final int faileID = -1;
 
@@ -22,8 +22,9 @@ public abstract class AbstractDAO<T> implements IUserDAO{
 	public Connection getConnection() {
 		String url = this.resourceBundle.getString("url");
 		String user = this.resourceBundle.getString("user");
-		String pass = this.resourceBundle.getString("pass");
+		String pass = this.resourceBundle.getString("password");
 		try {
+			Class.forName(this.resourceBundle.getString("driverName"));
 			return DriverManager.getConnection(url, user, pass);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,19 +49,18 @@ public abstract class AbstractDAO<T> implements IUserDAO{
 			return null;
 		}
 	}
-	
+
 	protected long countRow(String sql, Object... paramaters) {
 		try (Connection connection = getConnection()) {
-			try {
-				try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-					setParameter(preparedStatement, paramaters);
-					try (ResultSet resultSet = preparedStatement.executeQuery()) {
-						if (resultSet.next()) {
-							return resultSet.getLong(1);
-						}
-						return faileID;
+			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+				setParameter(preparedStatement, paramaters);
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
 					}
+					return faileID;
 				}
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				connection.rollback();
@@ -129,7 +129,9 @@ public abstract class AbstractDAO<T> implements IUserDAO{
 				} else if (object instanceof Long) {
 					preparedStatement.setLong(index, (Long) object);
 				} else if (object instanceof Timestamp) {
-					preparedStatement.setTimestamp(index, (java.sql.Timestamp) object);
+					preparedStatement.setTimestamp(index, (Timestamp) object);
+				} else if (object instanceof Boolean) {
+					preparedStatement.setBoolean(index, (Boolean) object);
 				} else {
 					preparedStatement.setNull(index, java.sql.Types.NULL);
 				}

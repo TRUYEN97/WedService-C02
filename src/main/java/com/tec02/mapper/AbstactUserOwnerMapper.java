@@ -15,20 +15,22 @@ public abstract class AbstactUserOwnerMapper<T extends IModel<IUserModel>> imple
 	
 	protected AbstactUserOwnerMapper() {};
 	
-	protected void defaultMapper(T model, ResultSet resultSet) {
+	protected T defaultMapper(T model, ResultSet resultSet) {
 		if(model == null || resultSet == null) {
-			return;
+			return null;
 		}
 		
 		try {
 			IUserModel userModel = (IUserModel) this.userModel.clone();
-			model.setId(resultSet.getLong("id"));
 			userModel.setId(resultSet.getLong("creationby"));
-			userModel.setUserName(resultSet.getString("username"));
+			userModel.setUsername(resultSet.getString("username"));
+			model.setId(resultSet.getLong("id"));
 			model.setCreator(userModel);
 			model.setCreationTime(resultSet.getTimestamp("creationtime"));
+			return model;
 		} catch (SQLException | CloneNotSupportedException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 }
