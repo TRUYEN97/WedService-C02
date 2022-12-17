@@ -1,27 +1,22 @@
-package com.tec02.mapper.impl;
+package com.tec02.mapper.impl.user;
 
 
 import java.sql.ResultSet;
 
-import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 
-import com.tec02.mapper.AbstactUserOwnerMapper;
-import com.tec02.mapper.IRoleMapper;
+import com.tec02.mapper.AbstactMapper;
 import com.tec02.mapper.IUserMapper;
-import com.tec02.model.IUserModel;
+import com.tec02.model.user.IUserModel;
 
-@Default
-public class UserMapper extends AbstactUserOwnerMapper<IUserModel> implements IUserMapper {
 
-	@Inject
-	private IRoleMapper roleMapper;
-	
+public class UserMapper extends AbstactMapper<IUserModel> implements IUserMapper {
+
 	@Inject
 	private IUserModel userModel;
-	
+
 	@Override
-	public IUserModel mapper(ResultSet resultSet) {
+	protected IUserModel createAndMapping(ResultSet resultSet) {
 		if (resultSet == null) {
 			return null;
 		}
@@ -29,9 +24,9 @@ public class UserMapper extends AbstactUserOwnerMapper<IUserModel> implements IU
 			IUserModel userModel = (IUserModel) this.userModel.clone();
 			userModel.setUsername(resultSet.getString("username"));
 			userModel.setUserpass(resultSet.getString("userpass"));
+			userModel.setRole_id(resultSet.getLong("role_id"));
 			userModel.setUser_status(resultSet.getBoolean("user_status"));
-			userModel.setRoleModel(roleMapper.mapper(resultSet));
-			return defaultMapper(userModel, resultSet);
+			return userModel;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -2,17 +2,17 @@ package com.tec02.model;
 
 import java.sql.Timestamp;
 
-public interface IModel<T>{
+public interface IModel{
 	
 	long getId();
 
 	void setId(long id);
+	
+	long getCreationby();
+	
+	void setCreationby(long creationby);
 
-	T getCreator();
-
-	void setCreator(T creator);
-
-	Timestamp getCreationTime();
+	String getCreationTime();
 
 	void setCreationTime(Timestamp creationTime);
 	

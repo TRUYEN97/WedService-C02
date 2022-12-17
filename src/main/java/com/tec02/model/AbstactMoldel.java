@@ -2,12 +2,24 @@ package com.tec02.model;
 
 import java.sql.Timestamp;
 
-public abstract class AbstactMoldel<T> implements IModel<T>{
+public abstract class AbstactMoldel implements IModel{
 	protected long id;
-	protected T creator;
+	protected long creationby;
 	protected Timestamp creationTime;
 	
 	protected AbstactMoldel() {};
+
+	
+	
+	public long getCreationby() {
+		return creationby;
+	}
+
+
+	public void setCreationby(long creationby) {
+		this.creationby = creationby;
+	}
+
 
 	public long getId() {
 		return id;
@@ -17,16 +29,8 @@ public abstract class AbstactMoldel<T> implements IModel<T>{
 		this.id = id;
 	}
 
-	public T getCreator() {
-		return creator;
-	}
-
-	public void setCreator(T creator) {
-		this.creator = creator;
-	}
-
-	public Timestamp getCreationTime() {
-		return creationTime;
+	public String getCreationTime() {
+		return creationTime == null ? null :creationTime.toString();
 	}
 
 	public void setCreationTime(Timestamp creationTime) {

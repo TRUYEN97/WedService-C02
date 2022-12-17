@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 import com.tec02.mapper.IRowMapper;
 
-public abstract class AbstractDAO<T> implements IUserDAO {
+public abstract class AbstractDAO<T> implements IDAO<T> {
 	private final ResourceBundle resourceBundle;
 	public static final int faileID = -1;
 
@@ -39,7 +39,7 @@ public abstract class AbstractDAO<T> implements IUserDAO {
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					List<T> result = new ArrayList<>();
 					while (resultSet.next()) {
-						result.add(mapper.mapper(resultSet));
+						result.add(mapper.mapping(resultSet));
 					}
 					return result;
 				}
