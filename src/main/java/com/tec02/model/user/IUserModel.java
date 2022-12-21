@@ -1,15 +1,8 @@
 package com.tec02.model.user;
 
-import java.util.List;
-
 import com.tec02.model.IModel;
 
 public interface IUserModel extends IModel, Cloneable{
-
-	
-	void setIds(long[] ids) ;
-
-	long[] getIds() ;
 	
 	boolean isUser_status();
 
@@ -26,8 +19,4 @@ public interface IUserModel extends IModel, Cloneable{
 	String getUserpass();
 
 	void setUserpass(String userpass);
-
-	void setUserModels(List<IUserModel> findAll);
-	
-	List<IUserModel> getUserModels();
 }

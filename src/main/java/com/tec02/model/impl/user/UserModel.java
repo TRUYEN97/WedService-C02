@@ -1,7 +1,5 @@
 package com.tec02.model.impl.user;
 
-import java.util.List;
-
 import com.tec02.model.AbstactMoldel;
 import com.tec02.model.user.IUserModel;
 
@@ -11,9 +9,6 @@ public class UserModel extends AbstactMoldel implements IUserModel{
 	private String userpass;
 	private Long role_id;
 	private boolean user_status;
-	private long[] ids;
-	
-	private List<IUserModel> userModels;
 	
 	public Long getRole_id() {
 		return role_id;
@@ -45,26 +40,6 @@ public class UserModel extends AbstactMoldel implements IUserModel{
 
 	public void setUserpass(String userpass) {
 		this.userpass = userpass;
-	}
-
-	@Override
-	public void setIds(long[] ids) {
-		this.ids = ids;
-	}
-
-	@Override
-	public long[] getIds() {
-		return ids;
-	}
-
-	@Override
-	public void setUserModels(List<IUserModel> userModels) {
-		this.userModels = userModels;
-	}
-
-	@Override
-	public List<IUserModel> getUserModels() {
-		return this.userModels;
 	}
 
 }

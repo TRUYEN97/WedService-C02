@@ -5,6 +5,8 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<properties>
+		<jaxb-api.sersion>2.3.1</jaxb-api.sersion>
+		<jjwt.sersion>0.9.1</jjwt.sersion>
 		<cdi-api.sersion>2.0-PFD2</cdi-api.sersion>
 		<mysql-connector.sersion>8.0.30</mysql-connector.sersion>
 		<weld.servlet.version>2.4.8.Final</weld.servlet.version>
@@ -22,6 +24,16 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>${jaxb-api.sersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.sersion}</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>

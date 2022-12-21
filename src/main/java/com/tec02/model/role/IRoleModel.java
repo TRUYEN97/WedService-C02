@@ -2,7 +2,7 @@ package com.tec02.model.role;
 
 import com.tec02.model.IModel;
 
-public interface IRoleModel extends IModel{
+public interface IRoleModel extends IModel, Cloneable{
 	
 	long getCode();
 

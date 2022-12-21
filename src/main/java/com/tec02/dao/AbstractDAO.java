@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +13,18 @@ import java.util.ResourceBundle;
 import com.tec02.mapper.IRowMapper;
 
 public abstract class AbstractDAO<T> implements IDAO<T> {
-	private final ResourceBundle resourceBundle;
 	public static final int faileID = -1;
 
 	public AbstractDAO() {
-		this.resourceBundle = ResourceBundle.getBundle("db");
 	}
 
 	public Connection getConnection() {
-		String url = this.resourceBundle.getString("url");
-		String user = this.resourceBundle.getString("user");
-		String pass = this.resourceBundle.getString("password");
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
+		String url = resourceBundle.getString("url");
+		String user = resourceBundle.getString("user");
+		String pass = resourceBundle.getString("password");
 		try {
-			Class.forName(this.resourceBundle.getString("driverName"));
+			Class.forName(resourceBundle.getString("driverName"));
 			return DriverManager.getConnection(url, user, pass);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,11 +49,18 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 			return null;
 		}
 	}
+	
+	@Override
+	public T findOne(long ID) {
+		List<T> list = findAll(new long[]{ID});
+		return list == null || list.isEmpty() ? null : list.get(0);
+	}
 
-	protected long countRow(String sql, Object... paramaters) {
+
+	protected long countRow(String sql, Object... parameters) {
 		try (Connection connection = getConnection()) {
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-				setParameter(preparedStatement, paramaters);
+				setParameter(preparedStatement, parameters);
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
 						return resultSet.getLong(1);
@@ -72,11 +79,12 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 		}
 	}
 
-	protected boolean updateRow(String sql, Object... paramaters) {
+	protected boolean updateRow(String sql, Object... parameters) {
 		try (Connection connection = getConnection()) {
 			connection.setAutoCommit(false);
 			try {
 				try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+					setParameter(preparedStatement, parameters);
 					preparedStatement.executeUpdate();
 					connection.commit();
 					return true;
@@ -92,12 +100,13 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 		}
 	}
 
-	protected long insert(String sql, Object... parameters) {
+	protected long insert(String sql, Object... parameters) throws SQLException {
 		try (Connection connection = getConnection()) {
 			connection.setAutoCommit(false);
 			try {
 				try (PreparedStatement preparedStatement = connection.prepareStatement(sql,
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
+					setParameter(preparedStatement, parameters);
 					preparedStatement.executeUpdate();
 					connection.commit();
 					try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
@@ -110,11 +119,8 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 			} catch (Exception e) {
 				e.printStackTrace();
 				connection.rollback();
-				return faileID;
+				throw e;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return faileID;
 		}
 	}
 

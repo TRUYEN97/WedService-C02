@@ -11,4 +11,6 @@ public interface IUserDAO extends IDAO<IUserModel>{
 	List<IUserModel> findAll();
 
 	List<IUserModel> findAll(long[] ids);
+
+	List<IUserModel> search(String value);
 }
